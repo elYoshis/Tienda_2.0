@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajita de Tesoros</title>
+    <!-- Cargamos Tailwind CSS por CDN para desarrollo rápido -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Un fondo oscuro similar al de tu diseño */
+        body { background-color: #121212; color: #ffffff; }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar básico -->
+    <header class="p-4 flex justify-between items-center border-b border-gray-800">
+        <div class="text-pink-400 font-bold text-2xl">Cajita de Tesoros</div>
+        <nav class="space-x-4 text-sm">
+            <a href="/" class="hover:text-pink-400 transition">Inicio</a>
+            <a href="/catalogo" class="hover:text-pink-400 transition">Juguetes</a>
+            <!-- Aquí irán luego el carrito y el login -->
+        </nav>
+    </header>
+
+    <!-- Contenido dinámico de las otras páginas -->
+    <main class="flex-grow p-6">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
