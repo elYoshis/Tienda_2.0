@@ -1,7 +1,15 @@
-from flask import render_template, request, redirect, url_for
+import os
+from werkzeug.utils import secure_filename
+from flask import render_template, request, redirect, url_for, current_app
 from app.admin import admin_bp
 from app.extensions import db
 from app.models import Product, Category
+
+# Extensiones de imagen permitidas
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @admin_bp.route('/')
 def dashboard():
@@ -11,26 +19,37 @@ def dashboard():
 @admin_bp.route('/producto/nuevo', methods=['GET', 'POST'])
 def add_product():
     if request.method == 'POST':
-        # Capturamos los datos del formulario HTML
         name = request.form.get('name')
         price = float(request.form.get('price'))
         stock = int(request.form.get('stock'))
         category_id = int(request.form.get('category_id'))
         
-        # Creamos la instancia del nuevo producto
+        # --- NUEVO: Manejo de la imagen ---
+        file = request.files.get('image')
+        filename = None
+        
+        if file and file.filename != '' and allowed_file(file.filename):
+            # secure_filename limpia el nombre (ej: "mi foto.jpg" -> "mi_foto.jpg")
+            filename = secure_filename(file.filename)
+            
+            # Asegurarse de que la carpeta de destino exista
+            os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
+            
+            # Guardar el archivo en el servidor
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        # ----------------------------------
+        
         new_product = Product(
             name=name,
             price=price,
             stock_quantity=stock,
-            category_id=category_id
+            category_id=category_id,
+            main_image=filename # Guardamos el nombre del archivo en la base de datos
         )
         
-        # Guardamos en la base de datos
         db.session.add(new_product)
         db.session.commit()
-        
         return redirect(url_for('admin.dashboard'))
     
-    # Si es GET, mostramos el formulario cargando las categorías disponibles
     categories = Category.query.all()
     return render_template('admin/add_product.html', categories=categories)

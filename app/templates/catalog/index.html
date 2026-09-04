@@ -25,15 +25,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% for product in products %}
             <div class="bg-gray-800 rounded-2xl overflow-hidden p-4 shadow-lg">
-                <div class="h-40 bg-gray-700 rounded-xl mb-4 flex items-center justify-center">
-                    <span class="text-gray-500">Sin Imagen</span>
+                <!-- NUEVO: Contenedor de la imagen -->
+                <div class="h-40 bg-gray-700 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                    {% if product.main_image %}
+                        <!-- url_for buscará el archivo en la carpeta static -->
+                        <img src="{{ url_for('static', filename='img/uploads/' + product.main_image) }}" alt="{{ product.name }}" class="object-cover w-full h-full">
+                    {% else %}
+                        <span class="text-gray-500">Sin Imagen</span>
+                    {% endif %}
                 </div>
-                <h3 class="font-bold text-lg mb-1">{{ product.name }}</h3>
-                <p class="text-pink-400 font-bold text-xl">Bs. {{ product.price }}</p>
-                <button class="mt-4 w-full bg-pink-500 hover:bg-pink-600 text-white py-2 rounded-full font-semibold transition">
-                    Ver detalle
-                </button>
-            </div>
             {% else %}
             <p class="text-gray-400">No hay productos registrados aún.</p>
             {% endfor %}
