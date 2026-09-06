@@ -22,5 +22,9 @@ def create_app(config_class=Config):
     # NUEVO: Registrar el panel de administrador
     from app.admin import admin_bp
     app.register_blueprint(admin_bp)
+    
+    # NUEVO: Registrar el carrito
+    from app.cart import cart_bp
+    app.register_blueprint(cart_bp)
 
     return app
