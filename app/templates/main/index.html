@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Hero Section (Sección Principal) -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Texto a la izquierda -->
+        <div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6 font-serif italic">
+                Encuentra los <br>
+                <span class="text-pink-400">mejores juguetes</span><br>
+                para cada <br> aventura 💖
+            </h1>
+            <p class="text-gray-300 text-lg mb-8">
+                Juguetes educativos, divertidos y seguros para todas las edades. ❤️
+            </p>
+            <a href="{{ url_for('catalog.index') }}" class="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 text-lg">
+                ¡Explorar juguetes! ➔
+            </a>
+            
+            <!-- Mini beneficios -->
+            <div class="flex gap-6 mt-8 text-sm text-gray-400 font-semibold">
+                <div class="flex items-center gap-2"><span class="text-pink-400">✔️</span> Seguros y de calidad</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">🍃</span> Materiales no tóxicos</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">💡</span> Diversión que enseña</div>
+            </div>
+        </div>
+        
+        <!-- Imagen representativa a la derecha (Placeholder) -->
+        <div class="relative bg-gradient-to-tr from-pink-900 to-gray-800 rounded-3xl p-8 flex justify-center items-center h-96 shadow-2xl">
+            <!-- Aquí puedes poner la imagen del osito y los juguetes de tu diseño -->
+            <p class="text-pink-300/50 font-bold text-2xl text-center">
+                [Espacio para tu imagen <br> de portada]
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Categorías -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <div class="flex flex-wrap justify-center gap-6">
+        {% for category in categories %}
+        <a href="{{ url_for('catalog.index') }}?type={{ category.name|lower }}" class="bg-gray-800 hover:bg-pink-900 border border-gray-700 hover:border-pink-500 transition rounded-2xl p-4 w-32 flex flex-col items-center justify-center gap-3 group shadow-md">
+            <div class="w-12 h-12 bg-gray-700 group-hover:bg-pink-500 rounded-full flex items-center justify-center text-2xl transition">
+                <!-- Puedes usar FontAwesome o Emojis dependiendo del ícono -->
+                🧸
+            </div>
+            <span class="text-sm font-semibold text-center text-gray-200">{{ category.name }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Footer / Banner de Confianza Inferior -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+        <div class="flex items-center gap-4">
+            <div class="text-3xl text-pink-500">🚚</div>
+            <div>
+                <strong class="block text-white">Envíos a todo Bolivia</strong>
+                <span class="text-gray-400">Rápidos y seguros</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-3xl text-pink-500">🔒</div>
+            <div>
+                <strong class="block text-white">Compra 100% segura</strong>
+                <span class="text-gray-400">Protegemos tus datos</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-3xl text-pink-500">📦</div>
+            <div>
+                <strong class="block text-white">Cambios y devoluciones</strong>
+                <span class="text-gray-400">Fácil y sin complicaciones</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-3xl text-pink-500">🎁</div>
+            <div>
+                <strong class="block text-white">Ofertas y novedades</strong>
+                <span class="text-gray-400">¡Nuevos juguetes cada semana! 💖</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

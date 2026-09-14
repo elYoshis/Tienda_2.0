@@ -1,7 +1,7 @@
 from app import create_app
 from app.extensions import db
 # Es vital importar los modelos aquí para que SQLAlchemy sepa qué tablas crear
-from app.models import Category, Product
+from app.models import Category, Product, User
 
 # Instanciamos la aplicación
 app = create_app()
@@ -10,6 +10,13 @@ with app.app_context():
     # 1. Crear todas las tablas
     db.create_all()
     print("✅ Tablas creadas en la base de datos.")
+
+    if not User.query.first():
+        admin = User(username='admin')
+        admin.set_password('1234') # <--- CAMBIA ESTA CONTRASEÑA
+        db.session.add(admin)
+        db.session.commit()
+        print("✅ Usuario administrador creado (User: admin)")
     
     # 2. Insertar datos de prueba (Seeders) si la tabla está vacía
     if not Category.query.first():

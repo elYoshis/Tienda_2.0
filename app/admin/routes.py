@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, url_for, current_app
 from app.admin import admin_bp
 from app.extensions import db
 from app.models import Product, Category
+from flask_login import login_required # <--- Nuevo import
 
 # Extensiones de imagen permitidas
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
@@ -12,11 +13,13 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @admin_bp.route('/')
+@login_required
 def dashboard():
     products = Product.query.order_by(Product.id.desc()).all()
     return render_template('admin/dashboard.html', products=products)
 
 @admin_bp.route('/producto/nuevo', methods=['GET', 'POST'])
+@login_required # <--- CANDADO
 def add_product():
     if request.method == 'POST':
         name = request.form.get('name')
