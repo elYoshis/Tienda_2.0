@@ -1,6 +1,7 @@
 from app.catalog import catalog_bp
 from flask import render_template
 from app.models import Category, Product
+from flask import request, jsonify # Asegúrate de importar request y jsonify en la parte superior
 
 @catalog_bp.route('/catalogo')
 def index():
@@ -9,3 +10,43 @@ def index():
     products = Product.query.all()
     
     return render_template('catalog/index.html', categories=categories, products=products)
+
+@catalog_bp.route('/api/productos')
+def api_productos():
+    # Empezamos con todos los productos
+    query = Product.query
+    
+    # 1. Filtro por texto (Nombre del juguete)
+    search = request.args.get('q', '')
+    if search:
+        query = query.filter(Product.name.ilike(f'%{search}%'))
+        
+    # 2. Filtro por tipo de juguete
+    toy_type = request.args.get('type', '')
+    if toy_type:
+        query = query.filter(Product.toy_type == toy_type)
+        
+    # 3. Filtro por tamaño
+    size = request.args.get('size', '')
+    if size:
+        query = query.filter(Product.size == size)
+        
+    # 4. Filtro por precio máximo
+    max_price = request.args.get('max_price', type=float)
+    if max_price is not None:
+        query = query.filter(Product.price <= max_price)
+        
+    # Ejecutar la consulta
+    products = query.all()
+    
+    # Convertir los resultados a diccionarios para enviarlos como JSON
+    result = []
+    for p in products:
+        result.append({
+            'id': p.id,
+            'name': p.name,
+            'price': p.price,
+            'main_image': p.main_image
+        })
+        
+    return jsonify(result)

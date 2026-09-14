@@ -18,7 +18,44 @@
             {% endfor %}
         </div>
     </div>
-
+    <!-- Barra de Filtros (Estilo de la imagen) -->
+    <div class="bg-pink-100 rounded-3xl p-6 mb-8 text-gray-800 shadow-md">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+            <!-- Búsqueda por texto -->
+            <div>
+                <label class="block text-sm font-bold text-pink-500 mb-2">🔍 Buscar</label>
+                <input type="text" id="searchInput" placeholder="¿Qué juguete buscas?" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400">
+            </div>
+            
+            <!-- Tipo de juguete -->
+            <div>
+                <label class="block text-sm font-bold text-pink-500 mb-2">📦 Tipo de juguete</label>
+                <select id="typeSelect" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400 cursor-pointer">
+                    <option value="">Todos los tipos</option>
+                    <option value="madera">De Madera</option>
+                    <option value="peluche">Peluches</option>
+                    <option value="interactivo">Interactivos</option>
+                </select>
+            </div>
+            
+            <!-- Tamaño -->
+            <div>
+                <label class="block text-sm font-bold text-pink-500 mb-2">📏 Tamaño</label>
+                <select id="sizeSelect" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400 cursor-pointer">
+                    <option value="">Todos los tamaños</option>
+                    <option value="pequeno">Pequeño</option>
+                    <option value="mediano">Mediano</option>
+                    <option value="grande">Grande</option>
+                </select>
+            </div>
+            
+            <!-- Precio -->
+            <div>
+                <label class="block text-sm font-bold text-pink-500 mb-2">💰 Precio (hasta Bs. <span id="priceLabel">500</span>)</label>
+                <input type="range" id="priceRange" min="0" max="1000" value="500" class="w-full accent-pink-500 cursor-pointer">
+            </div>
+        </div>
+    </div>
     <!-- Sección de Productos -->
     <div>
         <h2 class="text-xl mb-4">Todos los juguetes</h2>
@@ -42,4 +79,13 @@
         </div>
     </div>
 </div>
+
+<!-- Contenedor donde JS inyectará los productos -->
+    <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Los productos iniciales se cargan aquí mediante Jinja2 (lo que ya tenías) -->
+    </div>
+</div>
+
+<!-- Enlace a nuestro script externo -->
+<script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
 {% endblock %}

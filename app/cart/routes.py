@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session, flash
 from app.cart import cart_bp
 from app.models import Product
+import urllib.parse
 
 @cart_bp.route('/')
 def index():
@@ -42,3 +43,41 @@ def remove_item(product_id):
         del cart[product_id]
         session.modified = True
     return redirect(url_for('cart.index'))
+
+@cart_bp.route('/checkout')
+def checkout_whatsapp():
+    # Obtener el carrito actual
+    cart = session.get('cart', {})
+    
+    # Si el carrito está vacío, lo devolvemos a la página del carrito
+    if not cart:
+        return redirect(url_for('cart.index'))
+        
+    total = sum(item['price'] * item['quantity'] for item in cart.values())
+    
+    # 1. Armar el mensaje de texto
+    mensaje = "👋 ¡Hola Cajita de Tesoros! Me gustaría realizar el siguiente pedido:\n\n"
+    
+    for item in cart.values():
+        subtotal = item['price'] * item['quantity']
+        mensaje += f"▪️ {item['quantity']}x {item['name']} - Bs. {subtotal}\n"
+        
+    mensaje += f"\n💰 *Total a pagar: Bs. {total}*\n\n"
+    mensaje += "Por favor, indíquenme los métodos de pago (QR/Transferencia) y cómo coordinamos el envío a mi dirección."
+    
+    # 2. Codificar el mensaje para que sea válido en una URL
+    mensaje_codificado = urllib.parse.quote(mensaje)
+    
+    # 3. Tu número de teléfono (Asegúrate de incluir el código de país, ej: 591 para Bolivia)
+    # Reemplaza '59170000000' con el número real de atención al cliente de la juguetería
+    numero_tienda = "59165434972" 
+    
+    # 4. Generar el enlace de la API
+    whatsapp_url = f"https://wa.me/{numero_tienda}?text={mensaje_codificado}"
+    
+    # 5. Vaciar el carrito porque el pedido ya pasó a WhatsApp
+    session.pop('cart', None)
+    session.modified = True
+    
+    # 6. Redirigir al usuario
+    return redirect(whatsapp_url)
