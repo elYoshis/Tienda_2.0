@@ -50,3 +50,20 @@ def api_productos():
         })
         
     return jsonify(result)
+
+@catalog_bp.route('/categorias')
+def categories_list():
+    categories = Category.query.all()
+    return render_template('catalog/categories.html', categories=categories)
+
+@catalog_bp.route('/ofertas')
+def offers():
+    # Filtramos solo los productos que tienen un 'discount_price' configurado
+    products = Product.query.filter(Product.discount_price.isnot(None)).all()
+    return render_template('catalog/offers.html', products=products)
+
+@catalog_bp.route('/novedades')
+def new_arrivals():
+    # Obtenemos los últimos 12 productos agregados a la base de datos
+    products = Product.query.order_by(Product.id.desc()).limit(12).all()
+    return render_template('catalog/new_arrivals.html', products=products)

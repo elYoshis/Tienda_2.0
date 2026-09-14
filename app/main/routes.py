@@ -11,3 +11,7 @@ def index():
     latest_products = Product.query.filter_by(is_active=True).order_by(Product.id.desc()).limit(4).all()
     
     return render_template('main/index.html', categories=categories, products=latest_products)
+
+@main_bp.route('/contacto')
+def contact():
+    return render_template('main/contact.html')

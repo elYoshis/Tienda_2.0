@@ -19,40 +19,59 @@
         </div>
     </div>
     <!-- Barra de Filtros (Estilo de la imagen) -->
-    <div class="bg-pink-100 rounded-3xl p-6 mb-8 text-gray-800 shadow-md">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-            <!-- Búsqueda por texto -->
+    <!-- Barra de Filtros idéntica a la imagen -->
+    <div class="bg-filterbg rounded-[2rem] p-6 mb-10 shadow-lg border border-pink-200">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+            <!-- Buscar -->
+            <div class="md:col-span-1">
+                <label class="block text-xs font-bold text-[#d81b60] mb-2"><i class="far fa-heart mr-1"></i> Buscar</label>
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="¿Qué juguete buscas?" class="w-full bg-white rounded-xl py-2.5 pl-10 pr-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brandpink text-sm border-0 shadow-sm">
+                </div>
+            </div>
+            
+            <!-- Clasificación -->
             <div>
-                <label class="block text-sm font-bold text-pink-500 mb-2">🔍 Buscar</label>
-                <input type="text" id="searchInput" placeholder="¿Qué juguete buscas?" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400">
+                <label class="block text-xs font-bold text-[#d81b60] mb-2"><i class="fas fa-th-large mr-1"></i> Clasificación</label>
+                <select class="w-full bg-white rounded-xl py-2.5 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brandpink text-sm border-0 shadow-sm appearance-none cursor-pointer">
+                    <option>Selecciona</option>
+                </select>
             </div>
             
             <!-- Tipo de juguete -->
             <div>
-                <label class="block text-sm font-bold text-pink-500 mb-2">📦 Tipo de juguete</label>
-                <select id="typeSelect" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400 cursor-pointer">
+                <label class="block text-xs font-bold text-[#d81b60] mb-2"><i class="fas fa-shapes mr-1"></i> Tipo de juguete</label>
+                <select id="typeSelect" class="w-full bg-white rounded-xl py-2.5 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brandpink text-sm border-0 shadow-sm appearance-none cursor-pointer">
                     <option value="">Todos los tipos</option>
                     <option value="madera">De Madera</option>
                     <option value="peluche">Peluches</option>
-                    <option value="interactivo">Interactivos</option>
                 </select>
             </div>
             
             <!-- Tamaño -->
             <div>
-                <label class="block text-sm font-bold text-pink-500 mb-2">📏 Tamaño</label>
-                <select id="sizeSelect" class="w-full bg-white rounded-xl py-2 px-4 focus:outline-none focus:ring-2 focus:ring-pink-400 cursor-pointer">
+                <label class="block text-xs font-bold text-[#d81b60] mb-2"><i class="fas fa-ruler mr-1"></i> Tamaño</label>
+                <select id="sizeSelect" class="w-full bg-white rounded-xl py-2.5 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brandpink text-sm border-0 shadow-sm appearance-none cursor-pointer">
                     <option value="">Todos los tamaños</option>
                     <option value="pequeno">Pequeño</option>
-                    <option value="mediano">Mediano</option>
                     <option value="grande">Grande</option>
                 </select>
             </div>
             
-            <!-- Precio -->
-            <div>
-                <label class="block text-sm font-bold text-pink-500 mb-2">💰 Precio (hasta Bs. <span id="priceLabel">500</span>)</label>
-                <input type="range" id="priceRange" min="0" max="1000" value="500" class="w-full accent-pink-500 cursor-pointer">
+            <!-- Precio y Botón Buscar -->
+            <div class="flex items-center gap-4">
+                <div class="flex-grow">
+                    <label class="block text-xs font-bold text-[#d81b60] mb-2"><i class="fas fa-tag mr-1"></i> Precio</label>
+                    <div class="flex items-center justify-between text-[10px] font-bold text-[#d81b60] mb-1">
+                        <span>Bs. 0</span>
+                        <span>Bs. <span id="priceLabel">500</span>+</span>
+                    </div>
+                    <input type="range" id="priceRange" min="0" max="1000" value="500" class="w-full accent-brandpink cursor-pointer h-1 bg-pink-200 rounded-lg appearance-none">
+                </div>
+                <button class="bg-brandpink hover:bg-pink-600 text-white font-bold py-2.5 px-6 rounded-full transition shadow-md mt-6 flex items-center gap-2">
+                    Buscar <i class="fas fa-search"></i>
+                </button>
             </div>
         </div>
     </div>

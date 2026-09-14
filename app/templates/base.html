@@ -4,36 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cajita de Tesoros</title>
-    
-    <!-- Cargamos Tailwind CSS por CDN para desarrollo rápido -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Un fondo oscuro similar al de tu diseño */
-        body { background-color: #121212; color: #ffffff; }
-    </style>
-    <!-- Fuente para darle el toque itálico y elegante al título -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     
+    <!-- Fuentes idénticas a la imagen -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        script: ['Pacifico', 'cursive'],
+                    },
+                    colors: {
+                        darkbg: '#0f0c1b', /* El fondo súper oscuro con tono púrpura/negro */
+                        brandpink: '#ff4d85',
+                        filterbg: '#ffe4ee', /* El rosado claro de la barra de filtros */
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { background-color: #121212; color: #ffffff; }
-        .font-serif { font-family: 'Playfair Display', serif; }
+        body { background-color: #0f0c1b; color: #ffffff; }
+        /* Efecto del círculo punteado para el logo */
+        .logo-circle { border: 2px dashed #ff4d85; border-radius: 50%; padding: 15px; }
     </style>
-
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col">
+<body class="font-sans antialiased min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- Navbar básico -->
-    <header class="p-4 flex justify-between items-center border-b border-gray-800">
-        <div class="text-pink-400 font-bold text-2xl">Cajita de Tesoros</div>
-        <nav class="space-x-4 text-sm">
-            <a href="/" class="hover:text-pink-400 transition">Inicio</a>
-            <a href="/catalogo" class="hover:text-pink-400 transition">Juguetes</a>
-            <!-- Aquí irán luego el carrito y el login -->
+    <!-- Navbar idéntico a la imagen -->
+    <header class="py-4 px-8 flex justify-between items-center border-b border-gray-800/50 bg-darkbg/90 backdrop-blur-md sticky top-0 z-50">
+        
+        <!-- Enlaces principales -->
+        <!-- Enlaces principales -->
+        <nav class="hidden md:flex space-x-6 text-sm font-bold text-gray-300 items-center">
+            <a href="/" class="hover:text-brandpink transition">Inicio</a>
+            <a href="{{ url_for('catalog.index') }}" class="hover:text-brandpink transition">Juguetes</a>
+            <a href="{{ url_for('catalog.categories_list') }}" class="hover:text-brandpink transition">Categorías</a>
+            <a href="{{ url_for('catalog.offers') }}" class="hover:text-brandpink transition">Ofertas</a>
+            <a href="{{ url_for('catalog.new_arrivals') }}" class="hover:text-brandpink transition">Novedades</a>
+            <a href="{{ url_for('main.contact') }}" class="hover:text-brandpink transition">Contacto</a>
         </nav>
+
+        <!-- Buscador superior y botones de usuario/carrito -->
+        <div class="flex items-center gap-6">
+            <div class="relative hidden lg:block">
+                <input type="text" placeholder="Buscar juguetes..." class="bg-transparent border border-gray-600 rounded-full py-1.5 px-4 text-sm text-white focus:outline-none focus:border-brandpink w-64">
+                <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+            </div>
+            
+            <a href="{{ url_for('auth.login') }}" class="flex flex-col items-center text-gray-300 hover:text-brandpink transition text-xs">
+                <i class="far fa-user text-xl mb-1"></i>
+                Mi cuenta
+            </a>
+            
+            <a href="{{ url_for('cart.index') }}" class="relative flex flex-col items-center text-gray-300 hover:text-brandpink transition text-xs">
+                <i class="fas fa-shopping-cart text-xl mb-1"></i>
+                Carrito
+                <!-- Notificación del carrito (El circulito rojo con el número) -->
+                <span class="absolute -top-2 right-0 bg-brandpink text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    {{ session.get('cart', {})|length }}
+                </span>
+            </a>
+        </div>
     </header>
 
-    <!-- Contenido dinámico de las otras páginas -->
-    <main class="flex-grow p-6">
+    <main class="flex-grow">
         {% block content %}{% endblock %}
     </main>
 

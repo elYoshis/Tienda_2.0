@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-white mb-4">
+            Ponte en <span class="font-script text-brandpink text-5xl font-normal">Contacto</span>
+        </h1>
+        <p class="text-gray-400">¿Tienes alguna duda o pedido especial? ¡Escríbenos!</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 bg-gray-800/50 p-8 rounded-3xl border border-gray-700 shadow-xl">
+        <!-- Información de contacto -->
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-white mb-4">Información de la tienda</h3>
+            <div class="flex items-center gap-4 text-gray-300">
+                <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-brandpink text-xl">📍</div>
+                <div>
+                    <strong class="block text-white">Dirección</strong>
+                    Oruro, Bolivia
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-gray-300">
+                <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-brandpink text-xl">📞</div>
+                <div>
+                    <strong class="block text-white">Teléfono / WhatsApp</strong>
+                    +591 70000000
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-gray-300">
+                <div class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-brandpink text-xl">✉️</div>
+                <div>
+                    <strong class="block text-white">Correo Electrónico</strong>
+                    hola@cajitadetesoros.com
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario (Visual) -->
+        <form class="space-y-4">
+            <div>
+                <input type="text" placeholder="Tu nombre" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-brandpink">
+            </div>
+            <div>
+                <input type="email" placeholder="Tu correo electrónico" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-brandpink">
+            </div>
+            <div>
+                <textarea rows="4" placeholder="¿En qué podemos ayudarte?" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-brandpink"></textarea>
+            </div>
+            <button type="button" class="w-full bg-brandpink hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition shadow-lg">
+                Enviar mensaje
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
